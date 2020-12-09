@@ -12,7 +12,8 @@ $('#btnLogin').on('click', function (e) {
     //     if (data != 'null') {
     //         $(location).attr('href', 'escritorio.php');
     //     } else {
-        $('.alert').alert()
+        toastr.error('User name or password incorrect');
+        toastr.success('login successfully');
              
     //     }
     // });
