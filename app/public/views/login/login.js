@@ -5,16 +5,15 @@ $('#btnLogin').on('click', function (e) {
 
     console.log(txtUserName, txtPassword);
 
-    // $.post('../ajax/usuario.php?op=verificar', {
-    //     'logina': logina,
-    //     'clavea': clavea
-    // }, function (data) {
-    //     if (data != 'null') {
-    //         $(location).attr('href', 'escritorio.php');
-    //     } else {
+    $.post('../ajax/usuario.php?op=verificar', {
+        'logina': logina,
+        'clavea': clavea
+    }, function (data) {
+        if (data != 'null') {
+            $(location).attr('href', 'escritorio.php');
+        } else {
         toastr.error('User name or password incorrect');
-        toastr.success('login successfully');
              
-    //     }
-    // });
+        }
+    });
 });
