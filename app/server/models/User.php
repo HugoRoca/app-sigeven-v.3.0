@@ -3,7 +3,7 @@
 //Incluímos inicialmente la conexión a la base de datos
 require_once('../config/conexion.php');
 
-Class Usuario
+Class User
 {
     //Implementamoa nuestro constructor
     public function __construct(){
