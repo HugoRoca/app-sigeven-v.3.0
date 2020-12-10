@@ -22,7 +22,7 @@ switch ($_GET["op"]) {
 
         if (!file_exists($_FILES["imagen"]["tmp_name"]) || !is_uploaded_file($_FILES["imagen"]["tmp_name"])) {
             $imagen = $_POST["imagenactual"];
-        }else{
+        } else {
             $ext = explode(".", $_FILES["imagen"]["name"]);
             if ($_FILES["imagen"]["type"] == "image/jpg" || $_FILES["imagen"]["type"] == "image/jpeg" || $_FILES["imagen"]["type"] == "image/png") {
                 $imagen = round(microtime(true)) . '.' . end($ext);
@@ -36,7 +36,7 @@ switch ($_GET["op"]) {
         if (empty($idusuario)) {
             $rspta = $usuario->insertar($nombre, $tipo_documento, $num_documento, $direccion, $telefono, $email, $cargo, $login, $claveHash, $imagen, $_POST['permiso']);
             echo $rspta ? "Usuario registrado" : "No se pudieron registrar todos los datos del usuario.";
-        }else{
+        } else {
             $rspta = $usuario->editar($idusuario, $nombre, $tipo_documento, $num_documento, $direccion, $telefono, $email, $cargo, $login, $claveHash, $imagen, $_POST['permiso']);
             echo $rspta ? "Usuario actualizado" : "No se pudieron actualizar todos los datos del usuario.";
         }
@@ -55,30 +55,30 @@ switch ($_GET["op"]) {
         break;
     case 'listar':
         $rspta = $usuario->listar();
-        $data = Array();
+        $data = array();
 
         while ($reg = $rspta->fetch_object()) {
             $data[] = array(
-                "0"=>($reg->condicion) ? '<button class="btn btn-warning" onclick="mostrar('.$reg->idusuario.')"><i class="fa fa-pencil"></i></button> '.
-                    '<button class="btn btn-danger" onclick="desactivar('.$reg->idusuario.')"><i class="fa fa-close"></i></button>' : 
-                    '<button class="btn btn-warning" onclick="mostrar('.$reg->idusuario.')"><i class="fa fa-pencil"></i></button> '.
-                    '<button class="btn btn-primary" onclick="activar('.$reg->idusuario.')"><i class="fa fa-check"></i></button>',
-                "1"=>$reg->nombre,
-                "2"=>$reg->tipo_documento,
-                "3"=>$reg->num_documento,
-                "4"=>$reg->telefono,
-                "5"=>$reg->email,
-                "6"=>$reg->login,
-                "7"=>'<img src="../Files/Usuarios/'.$reg->imagen.'" height="50px" width="50px">',
-                "8"=>($reg->condicion) ? '<span class="label bg-green">Activado</<span>' : '<span class="label bg-red">Desactivado</<span>'
+                "0" => ($reg->condicion) ? '<button class="btn btn-warning" onclick="mostrar(' . $reg->idusuario . ')"><i class="fa fa-pencil"></i></button> ' .
+                    '<button class="btn btn-danger" onclick="desactivar(' . $reg->idusuario . ')"><i class="fa fa-close"></i></button>' :
+                    '<button class="btn btn-warning" onclick="mostrar(' . $reg->idusuario . ')"><i class="fa fa-pencil"></i></button> ' .
+                    '<button class="btn btn-primary" onclick="activar(' . $reg->idusuario . ')"><i class="fa fa-check"></i></button>',
+                "1" => $reg->nombre,
+                "2" => $reg->tipo_documento,
+                "3" => $reg->num_documento,
+                "4" => $reg->telefono,
+                "5" => $reg->email,
+                "6" => $reg->login,
+                "7" => '<img src="../Files/Usuarios/' . $reg->imagen . '" height="50px" width="50px">',
+                "8" => ($reg->condicion) ? '<span class="label bg-green">Activado</<span>' : '<span class="label bg-red">Desactivado</<span>'
             );
         }
 
         $results = array(
-            "sEcho"=>1, //información para el datatables
-            "iTotalRecords"=>count($data), //enviamos el total de registros al datatable
-            "iTotalDisplayRecords"=>count($data), //enviamos el total de registro a visualizar
-            "aaData"=>$data
+            "sEcho" => 1, //información para el datatables
+            "iTotalRecords" => count($data), //enviamos el total de registros al datatable
+            "iTotalDisplayRecords" => count($data), //enviamos el total de registro a visualizar
+            "aaData" => $data
         );
 
         echo json_encode($results);
@@ -105,7 +105,7 @@ switch ($_GET["op"]) {
         //Mostramos la lista de permisos en la vista y si están o no marcados
         while ($reg = $rpta->fetch_object()) {
             $sw = in_array($reg->idpermiso, $valores) ? 'checked' : '';
-            echo '<li><input type="checkbox" '.$sw.' name="permiso[]" value="'.$reg->idpermiso.'"> '.$reg->nombre.'</li>';
+            echo '<li><input type="checkbox" ' . $sw . ' name="permiso[]" value="' . $reg->idpermiso . '"> ' . $reg->nombre . '</li>';
         }
         break;
     case 'signin':
@@ -121,16 +121,22 @@ switch ($_GET["op"]) {
         break;
 
     case 'salir':
-        //Limpiamos las variables de sesion
-        session_start();
-        //Destruimos la session
-        session_destroy();
-        //Redireccionamos al login
-        header('Location: ../index.php');
+        signout();
         break;
 }
 
-function signin($username, $password, $class){
+function signout()
+{
+    //Limpiamos las variables de sesion
+    session_start();
+    //Destruimos la session
+    session_destroy();
+    //Redireccionamos al login
+    header('Location: ../index.php');
+}
+
+function signin($username, $password, $class)
+{
     $claveHash = $password; // hash("SHA256", $clavea);
     $result = $class->verificar($username, $claveHash);
     $fetch = $result->fetch_object();
@@ -154,16 +160,14 @@ function signin($username, $password, $class){
         }
 
         //Determinamos los acceso del usuarios
-        in_array(1, $valores) ? $_SESSION["escritorio"] = 1: $_SESSION["escritorio"] = 0;
-        in_array(2, $valores) ? $_SESSION["almacen"] = 1: $_SESSION["almacen"] = 0;
-        in_array(3, $valores) ? $_SESSION["compras"] = 1: $_SESSION["compras"] = 0;
-        in_array(4, $valores) ? $_SESSION["ventas"] = 1: $_SESSION["ventas"] = 0;
-        in_array(5, $valores) ? $_SESSION["acceso"] = 1: $_SESSION["acceso"] = 0;
-        in_array(6, $valores) ? $_SESSION["consultac"] = 1: $_SESSION["consultac"] = 0;
-        in_array(7, $valores) ? $_SESSION["consultav"] = 1: $_SESSION["consultav"] = 0;
+        in_array(1, $valores) ? $_SESSION["escritorio"] = 1 : $_SESSION["escritorio"] = 0;
+        in_array(2, $valores) ? $_SESSION["almacen"] = 1 : $_SESSION["almacen"] = 0;
+        in_array(3, $valores) ? $_SESSION["compras"] = 1 : $_SESSION["compras"] = 0;
+        in_array(4, $valores) ? $_SESSION["ventas"] = 1 : $_SESSION["ventas"] = 0;
+        in_array(5, $valores) ? $_SESSION["acceso"] = 1 : $_SESSION["acceso"] = 0;
+        in_array(6, $valores) ? $_SESSION["consultac"] = 1 : $_SESSION["consultac"] = 0;
+        in_array(7, $valores) ? $_SESSION["consultav"] = 1 : $_SESSION["consultav"] = 0;
     }
 
     return $fetch;
 }
-
-?>
