@@ -11,6 +11,7 @@ $("#btnLogin").on("click", function (e) {
     },
     function (data) {
       if (data != "null") {
+        console.log(data)
         $(location).attr("href", "dashboard.php");
       } else {
         toastr.error("User name or password incorrect");

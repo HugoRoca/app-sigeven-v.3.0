@@ -52,25 +52,134 @@ if (strlen(session_id()) < 1) {
     </div>
     <ul class="c-sidebar-nav">
       <li class="c-sidebar-nav-title">Options</li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="#">
-          <svg class="c-sidebar-nav-icon">
-            <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
-          </svg> Dashboard
-        </a>
-      </li>
-      <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-          <svg class="c-sidebar-nav-icon">
-            <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-calculator"></use>
-          </svg> Base</a>
-        <ul class="c-sidebar-nav-dropdown-items">
-          <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="base/breadcrumb.html">
-            <span class="c-sidebar-nav-icon"></span> Breadcrumb
-            </a>
-          </li>
-        </ul>
-      </li>
+      <?php
+      if ($_SESSION['dashboard'] == 1) {
+        echo '
+        <li class="c-sidebar-nav-item">
+          <a class="c-sidebar-nav-link" href="#">
+            <svg class="c-sidebar-nav-icon">
+              <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg> Dashboard
+          </a>
+        </li>
+        ';
+      }
+
+      if ($_SESSION['warehouse'] == 1) {
+        echo '
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+          <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <svg class="c-sidebar-nav-icon">
+              <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-calculator"></use>
+            </svg> Warehouse</a>
+          <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="categories.php">
+                <span class="c-sidebar-nav-icon"></span> Categories
+              </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="products.php">
+                <span class="c-sidebar-nav-icon"></span> Products
+              </a>
+            </li>
+          </ul>
+        </li>
+        ';
+      }
+
+      if ($_SESSION['purchases'] == 1) {
+        echo '
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+          <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <svg class="c-sidebar-nav-icon">
+              <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-calculator"></use>
+            </svg> Purchases</a>
+          <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="product_entry.php">
+                <span class="c-sidebar-nav-icon"></span> Product Entry
+              </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="provider.php">
+                <span class="c-sidebar-nav-icon"></span> Provider
+              </a>
+            </li>
+          </ul>
+        </li>
+        ';
+      }
+
+      if ($_SESSION['sales'] == 1) {
+        echo '
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+          <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <svg class="c-sidebar-nav-icon">
+              <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-calculator"></use>
+            </svg> Sales</a>
+          <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="sales.php">
+                <span class="c-sidebar-nav-icon"></span> Sales
+              </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="customers.php">
+                <span class="c-sidebar-nav-icon"></span> Customers
+              </a>
+            </li>
+          </ul>
+        </li>
+        ';
+      }
+
+      if ($_SESSION['access'] == 1) {
+        echo '
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+          <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <svg class="c-sidebar-nav-icon">
+              <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-calculator"></use>
+            </svg> Access</a>
+          <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="users.php">
+                <span class="c-sidebar-nav-icon"></span> Users
+              </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="permissions.php">
+                <span class="c-sidebar-nav-icon"></span> Permissions
+              </a>
+            </li>
+          </ul>
+        </li>
+        ';
+      }
+
+      if ($_SESSION['inquiries'] == 1) {
+        echo '
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+          <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <svg class="c-sidebar-nav-icon">
+              <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-calculator"></use>
+            </svg> Inquiries</a>
+          <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="inquiries_sales.php">
+                <span class="c-sidebar-nav-icon"></span> Sales
+              </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <a class="c-sidebar-nav-link" href="inquiries_purchases.php">
+                <span class="c-sidebar-nav-icon"></span> Purchases
+              </a>
+            </li>
+          </ul>
+        </li>
+        ';
+      }
+      ?>
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
   </div>
