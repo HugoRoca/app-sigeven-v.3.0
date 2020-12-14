@@ -120,7 +120,7 @@ switch ($_GET["op"]) {
         }
         break;
 
-    case 'salir':
+    case 'signout':
         signout();
         break;
 }
@@ -132,7 +132,7 @@ function signout()
     //Destruimos la session
     session_destroy();
     //Redireccionamos al login
-    header('Location: ../index.php');
+    header('Location: ../../index.php');
 }
 
 function signin($username, $password, $class)
