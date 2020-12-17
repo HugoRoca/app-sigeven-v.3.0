@@ -157,7 +157,7 @@ if (strlen(session_id()) < 1) {
         ';
       }
 
-      if ($_SESSION['inquiries'] == 1) {
+      if ($_SESSION['reports'] == 1) {
         echo '
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
           <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">

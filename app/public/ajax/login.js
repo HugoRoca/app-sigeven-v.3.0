@@ -4,7 +4,7 @@ $("#btnLogin").on("click", function (e) {
   txtPassword = $("#txtPassword").val();
 
   $.post(
-    "../../server/controllers/user.php?op=signin",
+    "../../server/controllers/user.php?action=signin",
     {
       username: txtUserName,
       password: txtPassword,

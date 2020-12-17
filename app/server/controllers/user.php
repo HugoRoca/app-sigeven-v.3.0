@@ -1,172 +1,68 @@
 <?php
+
 session_start();
 
-require_once('../models/User.php');
+require_once('../services/user.php');
 
-$User = new User();
+$user = new User();
 
-$idusuario = isset($_POST["idusuario"]) ? limpiarCadena($_POST["idusuario"]) : "";
-$nombre = isset($_POST["nombre"]) ? limpiarCadena($_POST["nombre"]) : "";
-$tipo_documento = isset($_POST["tipo_documento"]) ? limpiarCadena($_POST["tipo_documento"]) : "";
-$num_documento = isset($_POST["num_documento"]) ? limpiarCadena($_POST["num_documento"]) : "";
-$direccion = isset($_POST["direccion"]) ? limpiarCadena($_POST["direccion"]) : "";
-$telefono = isset($_POST["telefono"]) ? limpiarCadena($_POST["telefono"]) : "";
-$email = isset($_POST["email"]) ? limpiarCadena($_POST["email"]) : "";
-$cargo = isset($_POST["cargo"]) ? limpiarCadena($_POST["cargo"]) : "";
-$login = isset($_POST["login"]) ? limpiarCadena($_POST["login"]) : "";
-$clave = isset($_POST["clave"]) ? limpiarCadena($_POST["clave"]) : "";
-$imagen = isset($_POST["imagen"]) ? limpiarCadena($_POST["imagen"]) : "";
+switch ($_GET['action']) {
+  case 'signin':
+    try {
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+      $fetch = signin($username, $password, $user);
 
-switch ($_GET["op"]) {
-    case 'guardaryeditar':
+      echo json_encode($fetch);
+    } catch (Exception $e) {
+      echo json_encode($e);
+    }
+    break;
+  case 'signout':
+    signout();
+    break;
+}
 
-        if (!file_exists($_FILES["imagen"]["tmp_name"]) || !is_uploaded_file($_FILES["imagen"]["tmp_name"])) {
-            $imagen = $_POST["imagenactual"];
-        } else {
-            $ext = explode(".", $_FILES["imagen"]["name"]);
-            if ($_FILES["imagen"]["type"] == "image/jpg" || $_FILES["imagen"]["type"] == "image/jpeg" || $_FILES["imagen"]["type"] == "image/png") {
-                $imagen = round(microtime(true)) . '.' . end($ext);
-                move_uploaded_file($_FILES["imagen"]["tmp_name"], "../Files/Usuarios/" . $imagen);
-            }
-        }
+function signin($userName, $password, $class) 
+{
+  $passwordHash = $password;
+  $result = $class->signIn($userName, $passwordHash);
+  $fetch = $result->fetch_object();
 
-        //Hash SHA256 en la contraseña
-        $claveHash = hash("SHA256", $clave);
+  if (isset($fetch)) 
+  {
+    $_SESSION['id'] = $fetch->id;
+    $_SESSION['name'] = $fetch->name;
+    $_SESSION['image'] = $fetch->image;
+    $_SESSION['user_name'] = $fetch->user_name;
 
-        if (empty($idusuario)) {
-            $rspta = $usuario->insertar($nombre, $tipo_documento, $num_documento, $direccion, $telefono, $email, $cargo, $login, $claveHash, $imagen, $_POST['permiso']);
-            echo $rspta ? "Usuario registrado" : "No se pudieron registrar todos los datos del usuario.";
-        } else {
-            $rspta = $usuario->editar($idusuario, $nombre, $tipo_documento, $num_documento, $direccion, $telefono, $email, $cargo, $login, $claveHash, $imagen, $_POST['permiso']);
-            echo $rspta ? "Usuario actualizado" : "No se pudieron actualizar todos los datos del usuario.";
-        }
-        break;
-    case 'desactivar':
-        $rspta = $usuario->desactivar($idusuario);
-        echo $rspta ? "Usuario desactivado" : "Usuario no se pudo desactivar";
-        break;
-    case 'activar':
-        $rspta = $usuario->activar($idusuario);
-        echo $rspta ? "Usuario activado" : "Usuario no se pudo activar";
-        break;
-    case 'mostrar':
-        $rspta = $usuario->mostrar($idusuario);
-        echo json_encode($rspta);
-        break;
-    case 'listar':
-        $rspta = $usuario->listar();
-        $data = array();
+    // get permissions by user id
+    $permissions = $class->getPermissionByUserId($fetch->id);
 
-        while ($reg = $rspta->fetch_object()) {
-            $data[] = array(
-                "0" => ($reg->condicion) ? '<button class="btn btn-warning" onclick="mostrar(' . $reg->idusuario . ')"><i class="fa fa-pencil"></i></button> ' .
-                    '<button class="btn btn-danger" onclick="desactivar(' . $reg->idusuario . ')"><i class="fa fa-close"></i></button>' :
-                    '<button class="btn btn-warning" onclick="mostrar(' . $reg->idusuario . ')"><i class="fa fa-pencil"></i></button> ' .
-                    '<button class="btn btn-primary" onclick="activar(' . $reg->idusuario . ')"><i class="fa fa-check"></i></button>',
-                "1" => $reg->nombre,
-                "2" => $reg->tipo_documento,
-                "3" => $reg->num_documento,
-                "4" => $reg->telefono,
-                "5" => $reg->email,
-                "6" => $reg->login,
-                "7" => '<img src="../Files/Usuarios/' . $reg->imagen . '" height="50px" width="50px">',
-                "8" => ($reg->condicion) ? '<span class="label bg-green">Activado</<span>' : '<span class="label bg-red">Desactivado</<span>'
-            );
-        }
+    $values = array();
 
-        $results = array(
-            "sEcho" => 1, //información para el datatables
-            "iTotalRecords" => count($data), //enviamos el total de registros al datatable
-            "iTotalDisplayRecords" => count($data), //enviamos el total de registro a visualizar
-            "aaData" => $data
-        );
+    while ($per = $permissions->fetch_object())
+    {
+      array_push($values, $per->id_permission);
+    }
 
-        echo json_encode($results);
+    in_array(1, $values) ? $_SESSION["dashboard"] = 1 : $_SESSION["dashboard"] = 0;
+    in_array(2, $values) ? $_SESSION["warehouse"] = 1 : $_SESSION["warehouse"] = 0;
+    in_array(3, $values) ? $_SESSION["purchases"] = 1 : $_SESSION["purchases"] = 0;
+    in_array(4, $values) ? $_SESSION["sales"] = 1 : $_SESSION["sales"] = 0;
+    in_array(5, $values) ? $_SESSION["access"] = 1 : $_SESSION["access"] = 0;
+    in_array(6, $values) ? $_SESSION["reports"] = 1 : $_SESSION["reports"] = 0;
 
-        break;
-    case 'permisos':
-        //Obtenemos todos los permisos de la tabla permisos
-        require_once '../models/Permiso.php';
-        $permiso = new Permiso();
-        $rpta = $permiso->listar();
+  }
 
-        //Obtener los permisos asignados del usuario
-        $id = $_GET['id'];
-        $marcados = $usuario->listarMarcados($id);
-
-        //Declaramos el array para almacenar todos los pemrisos marcados
-        $valores = array();
-
-        //Almacenar los permisos asignados al usuario en el array
-        while ($per = $marcados->fetch_object()) {
-            array_push($valores, $per->idpermiso);
-        }
-
-        //Mostramos la lista de permisos en la vista y si están o no marcados
-        while ($reg = $rpta->fetch_object()) {
-            $sw = in_array($reg->idpermiso, $valores) ? 'checked' : '';
-            echo '<li><input type="checkbox" ' . $sw . ' name="permiso[]" value="' . $reg->idpermiso . '"> ' . $reg->nombre . '</li>';
-        }
-        break;
-    case 'signin':
-        try {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $fetch = signin($username, $password, $User);
-
-            echo json_encode($fetch);
-        } catch (Exception $eh) {
-            echo json_encode($eh);
-        }
-        break;
-
-    case 'signout':
-        signout();
-        break;
+  return $fetch;
 }
 
 function signout()
 {
-    //Limpiamos las variables de sesion
     session_start();
-    //Destruimos la session
     session_destroy();
-    //Redireccionamos al login
     header('Location: ../../index.php');
 }
 
-function signin($username, $password, $class)
-{
-    $claveHash = $password; // hash("SHA256", $clavea);
-    $result = $class->verificar($username, $claveHash);
-    $fetch = $result->fetch_object();
-
-    if (isset($fetch)) {
-        ///Declaración de variables de session
-        $_SESSION['idusuario'] = $fetch->idusuario;
-        $_SESSION['nombre'] = $fetch->nombre;
-        $_SESSION['imagen'] = $fetch->imagen;
-        $_SESSION['login'] = $fetch->login;
-
-        //obtenemos los permuisios del usuario
-        $marcados = $class->listarMarcados($fetch->idusuario);
-
-        //declaramos un array para alamcenar todos los permisos marcados
-        $valores = array();
-
-        //almacenamos los permisos marcados en el array
-        while ($per = $marcados->fetch_object()) {
-            array_push($valores, $per->idpermiso);
-        }
-
-        //Determinamos los acceso del usuarios
-        in_array(1, $valores) ? $_SESSION["dashboard"] = 1 : $_SESSION["dashboard"] = 0;
-        in_array(2, $valores) ? $_SESSION["warehouse"] = 1 : $_SESSION["warehouse"] = 0;
-        in_array(3, $valores) ? $_SESSION["purchases"] = 1 : $_SESSION["purchases"] = 0;
-        in_array(4, $valores) ? $_SESSION["sales"] = 1 : $_SESSION["sales"] = 0;
-        in_array(5, $valores) ? $_SESSION["access"] = 1 : $_SESSION["access"] = 0;
-        in_array(6, $valores) ? $_SESSION["inquiries"] = 1 : $_SESSION["inquiries"] = 0;
-    }
-
-    return $fetch;
-}
+?>

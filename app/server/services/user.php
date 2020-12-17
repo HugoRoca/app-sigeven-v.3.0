@@ -7,8 +7,21 @@ Class User
 {
   public function __construct() {}
 
-  public function signin($login, $password) {
-    $sql = "SELECT ";
+  public function signIn($userName, $password)
+  {
+    $sql = "SELECT * 
+            FROM user
+            WHERE user_name = '$userName'
+              AND password = '$password'
+              AND state = '1'";
+    return execQuery($sql);
+  }
+
+  public function getPermissionByUserId($userId)
+  {
+    $sql = "SELECT * 
+            FROM userpermission 
+            WHERE id_user = '$userId'";
     return execQuery($sql);
   }
 }
