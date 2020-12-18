@@ -56,7 +56,7 @@ if (strlen(session_id()) < 1) {
       if ($_SESSION['dashboard'] == 1) {
         echo '
         <li class="c-sidebar-nav-item">
-          <a class="c-sidebar-nav-link" href="#">
+          <a class="c-sidebar-nav-link" href="dashboard.php">
             <svg class="c-sidebar-nav-icon">
               <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
             </svg> Dashboard
@@ -143,7 +143,7 @@ if (strlen(session_id()) < 1) {
             </svg> Access</a>
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
-              <a class="c-sidebar-nav-link" href="users.php">
+              <a class="c-sidebar-nav-link" href="user.php">
                 <span class="c-sidebar-nav-icon"></span> Users
               </a>
             </li>
@@ -199,9 +199,25 @@ if (strlen(session_id()) < 1) {
         </svg>
       </button>
       <ul class="c-header-nav d-md-down-none">
-        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Dashboard</a></li>
-        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Users</a></li>
-        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Settings</a></li>
+        <?php
+          if ($_SESSION['dashboard'] == 1) {
+            echo '
+              <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="dashboard.php">Dashboard</a></li>
+            ';
+          }
+
+          if ($_SESSION['access'] == 1) {
+            echo '
+              <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="user.php">Users</a></li>
+            ';
+          }
+
+          if ($_SESSION['sales'] == 1) {
+            echo '
+              <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="sale.php">Sales</a></li>
+            ';
+          }
+        ?>
       </ul>
       <ul class="c-header-nav ml-auto mr-4">
         <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

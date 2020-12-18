@@ -1,6 +1,6 @@
 <?php
 
 // redirect to login page
-header('Location: public/views/login.html');
+header('Location: views/login.html');
 
 ?>
