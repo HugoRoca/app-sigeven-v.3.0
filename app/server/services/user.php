@@ -24,6 +24,12 @@ Class User
             WHERE id_user = '$userId'";
     return execQuery($sql);
   }
+
+  public function getAllUsers()
+  {
+    $sql = "SELECT * FROM user";
+    return execQuery($sql);
+  }
 }
 
 ?>

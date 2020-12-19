@@ -38,6 +38,11 @@ if (strlen(session_id()) < 1) {
   <!-- Main styles for this application-->
   <link href="../content/css/style.css" rel="stylesheet">
   <link href="../content/vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
+  <!-- Data tables-->
+  <link rel="stylesheet" href="../content/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="../content/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="../content/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="../content/css/bootstrap-select.min.css">
 </head>
 
 <body class="c-app">
@@ -248,7 +253,7 @@ if (strlen(session_id()) < 1) {
               </svg> Projects<span class="badge badge-primary ml-auto">42</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="../../server/controllers/user.php?op=signout">
+            <a class="dropdown-item" href="../server/controllers/user.php?action=signout">
               <svg class="c-icon mr-2">
                 <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
               </svg> Logout
