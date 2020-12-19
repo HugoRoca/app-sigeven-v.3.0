@@ -21,6 +21,15 @@ switch ($_GET['action']) {
   case 'signout':
     signout();
     break;
+  case 'getAllUsers':
+    try {
+      $result = getAllUsers($user);
+
+      echo json_encode($result);
+    } catch (Exception $e) {
+      echo json_encode($e);
+    }
+    break;
 }
 
 function signin($userName, $password, $class) 
@@ -65,4 +74,38 @@ function signout()
     header('Location: ../../index.php');
 }
 
+function getAllUsers($class)
+{
+  $usersData = $class->getAllUsers();
+  $data = array();
+
+  while ($reg = $usersData->fetch_object())
+  {
+    $data[] = array(
+      "0" => ($reg->state) ? 
+        '<button class="btn btn-warning" onclick="redirect(' . $reg->id . ')"><i class="fa fa-pencil"></i></button>'.
+        '<button class="btn btn-danger" onclick="disabled(' . $reg->id . ')"><i class="fa fa-close"></i></button>' :
+        '<button class="btn btn-warning" onclick="redirect(' . $reg->id . ')"><i class="fa fa-pencil"></i></button>'.
+        '<button class="btn btn-primary" onclick="enabled(' . $reg->id . ')"><i class="fa fa-check"></i></button>',
+      "1" => $reg->name,
+      "2" => $reg->document_type,
+      "3" => $reg->document_number,
+      "4" => $reg->email,
+      "5" => $reg->user_name,
+      "6" => '<img src="../files/users/' . $reg->image . '" height="50px" width="50px"/>',
+      "7" => ($reg->state) ? 
+        '<span class="label bg-green">Activated</<span>' : 
+        '<span class="label bg-red">Disabled</<span>'
+    );
+  }
+
+  $result = array(
+    "sEcho" => 1,
+    "iTotalRecords" => count($data),
+    "iTotalDisplayRecords" => count($data),
+    "aaData" => $data,
+  );
+
+  return $result;
+}
 ?>
