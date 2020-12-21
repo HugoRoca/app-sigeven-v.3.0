@@ -11,12 +11,14 @@
   <script src="../content/vendors/@coreui/icons/js/svgxuse.min.js"></script>
   <!--<![endif]-->
   <!-- Plugins and scripts required by this view-->
-  <script src="../content/vendors/@coreui/chartjs/js/coreui-chartjs.bundle.js"></script>
+  <!-- <script src="../content/vendors/@coreui/chartjs/js/coreui-chartjs.bundle.js"></script> -->
   <script src="../content/vendors/@coreui/utils/js/coreui-utils.js"></script>
   <script src="../content/js/main.js"></script>
+  <script src="../content/js/tooltips.js"></script>
   <!-- Data tables-->
   <script src="../content/js/jquery.min.js"></script>
   <script src="../content/js/jquery.dataTables.min.js"></script>
+  <script src="../content/js/dataTables.responsive.min.js"></script>  
   <script src="../content/js/dataTables.buttons.min.js"></script>
   <script src="../content/js/buttons.html5.min.js"></script>
   <script src="../content/js/buttons.colVis.min.js"></script>

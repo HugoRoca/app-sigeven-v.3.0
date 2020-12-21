@@ -76,6 +76,7 @@ function signout()
 
 function getAllUsers($class)
 {
+  $icon = '<svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg>';
   $usersData = $class->getAllUsers();
   $data = array();
 
@@ -83,10 +84,10 @@ function getAllUsers($class)
   {
     $data[] = array(
       "0" => ($reg->state) ? 
-        '<button class="btn btn-warning" onclick="redirect(' . $reg->id . ')"><i class="fa fa-pencil"></i></button>'.
-        '<button class="btn btn-danger" onclick="disabled(' . $reg->id . ')"><i class="fa fa-close"></i></button>' :
-        '<button class="btn btn-warning" onclick="redirect(' . $reg->id . ')"><i class="fa fa-pencil"></i></button>'.
-        '<button class="btn btn-primary" onclick="enabled(' . $reg->id . ')"><i class="fa fa-check"></i></button>',
+        '<button title="Edit" class="btn btn-warning ml-2" onclick="redirect(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg></button>'.
+        '<button title="Disabled" class="btn btn-danger ml-2" onclick="disabled(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-trash"></use></svg></button>' :
+        '<button title="Edit" class="btn btn-warning ml-2" onclick="redirect(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg></button>'.
+        '<button title="Enabled" class="btn btn-success ml-2" onclick="enabled(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-check"></use></svg></button>',
       "1" => $reg->name,
       "2" => $reg->document_type,
       "3" => $reg->document_number,
