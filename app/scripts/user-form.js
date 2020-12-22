@@ -3,7 +3,9 @@ const userFormModule = (function ($) {
 
     let userForm = {};
 
-    userForm.init = {}
+    userForm.init = {
+
+    }
 
     return userForm;
 })(jQuery);

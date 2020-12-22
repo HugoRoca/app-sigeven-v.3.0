@@ -17,5 +17,10 @@ const general = {
             return false;
         }
         return true;
+    },
+    getQueryParamURLById(id) {
+        const url_string = window.location.href
+        const url = new URL(url_string);
+        return url.searchParams.get(id);
     }
 }
