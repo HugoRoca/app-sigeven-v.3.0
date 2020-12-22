@@ -1,8 +1,8 @@
 <?php
 
-/*if (strlen(session_id()) < 1) {
+if (strlen(session_id()) < 1) {
   session_start();
-}*/
+}
 
 ?>
 
@@ -146,7 +146,7 @@
             </svg> Access</a>
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
-              <a class="c-sidebar-nav-link" href="user.php">
+              <a class="c-sidebar-nav-link" href="user-list.php">
                 <span class="c-sidebar-nav-icon"></span> Users
               </a>
             </li>
@@ -211,7 +211,7 @@
 
           if ($_SESSION['access'] == 1) {
             echo '
-              <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="user.php">Users</a></li>
+              <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="user-list.php">Users</a></li>
             ';
           }
 
@@ -224,7 +224,9 @@
       </ul>
       <ul class="c-header-nav ml-auto mr-4">
         <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <div class="c-avatar"><img class="c-avatar-img" src="../content/assets/img/avatars/6.jpg" alt="user@email.com"></div>
+            <div class="c-avatar">
+                <img class="c-avatar-img" src="../files/users/<?php echo $_SESSION['image']; ?>">
+            </div>
           </a>
           <div class="dropdown-menu dropdown-menu-right pt-0">
             <div class="dropdown-header bg-light py-2">
@@ -235,23 +237,8 @@
                 <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
               </svg> Profile
             </a>
-            <a class="dropdown-item" href="#">
-              <svg class="c-icon mr-2">
-                <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
-              </svg> Settings
-            </a>
-            <a class="dropdown-item" href="#">
-              <svg class="c-icon mr-2">
-                <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-credit-card"></use>
-              </svg> Payments<span class="badge badge-secondary ml-auto">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
-              <svg class="c-icon mr-2">
-                <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-file"></use>
-              </svg> Projects<span class="badge badge-primary ml-auto">42</span>
-            </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="../server/controllers/user.php?action=signOut">
+            <a class="dropdown-item" href="../server/controllers/user-list.php?action=signOut">
               <svg class="c-icon mr-2">
                 <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
               </svg> Logout

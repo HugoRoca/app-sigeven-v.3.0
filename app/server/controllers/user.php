@@ -103,16 +103,16 @@ function getAllUsers($class)
   {
     $data[] = array(
       "0" => ($reg->state) ? 
-        '<button title="Edit" class="btn btn-warning ml-2" onclick="redirect(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg></button>'.
-        '<button title="Disabled" class="btn btn-danger ml-2" onclick="disabledUser(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-trash"></use></svg></button>' :
-        '<button title="Edit" class="btn btn-warning ml-2" onclick="redirect(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg></button>'.
-        '<button title="Enabled" class="btn btn-success ml-2" onclick="enabledUser(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-check"></use></svg></button>',
+        '<button title="Edit" class="btn btn-sm btn-warning ml-2" onclick="userListModule.redirectFormUser(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg></button>'.
+        '<button title="Disabled" class="btn btn-sm btn-danger ml-2" onclick="userListModule.disabledUser(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-trash"></use></svg></button>' :
+        '<button title="Edit" class="btn btn-sm btn-warning ml-2" onclick="userListModule.redirectFormUser(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg></button>'.
+        '<button title="Enabled" class="btn btn-sm btn-success ml-2" onclick="userListModule.enabledUser(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-check"></use></svg></button>',
       "1" => $reg->name,
       "2" => $reg->document_type,
       "3" => $reg->document_number,
       "4" => $reg->email,
       "5" => $reg->user_name,
-      "6" => '<img src="../files/users/' . $reg->image . '" height="50px" width="50px"/>',
+      "6" => '<img class="c-avatar-img" src="../files/users/' . $reg->image . '" height="50px" width="50px"/>',
       "7" => ($reg->state) ? 
         '<span class="badge bg-success">Activated</<span>' : 
         '<span class="badge bg-danger text-white">Disabled</<span>'

@@ -26,7 +26,7 @@
   <script src="../content/js/vfs_fonts.js"></script>
   
   <script src="../content/js/toastr.min.js"></script>
-  <script src="../scripts/utils.js"></script>
+  <script src="../scripts/general.js"></script>
 </body>
 
 </html>

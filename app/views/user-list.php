@@ -15,7 +15,7 @@ if (!isset($_SESSION["name"])) {
           <div class="card">
             <div class="card-header">
               <strong>Users</strong> List | 
-              <a class="btn btn-sm btn-outline-primary" type="button" href="new-user.php"> New User</a>
+              <a class="btn btn-sm btn-outline-primary" type="button" href="user-form.php?id=0"> New User</a>
             </div>
             <div class="card-body">
               <table id="tblUserList" class="display responsive nowrap">
@@ -45,8 +45,14 @@ if (!isset($_SESSION["name"])) {
 require 'footer.php';
 
 ?>
-
-<script src="../scripts/user.js"></script>
+<script>
+    const globalData = {
+        elements: {
+            tblUserListId: '#tblUserList'
+        }
+    }
+</script>
+<script src="../scripts/user-list.js"></script>
 
 <?php
 ob_end_flush();
