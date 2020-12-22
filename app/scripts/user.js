@@ -22,6 +22,43 @@ function loadUserList() {
       });
     },
     error: function (err) {
+      closeLoad();
+      console.log(err);
+    },
+  });
+}
+
+function disabledUser(id) {
+  openLoad();
+  $.ajax({
+    url: "../server/controllers/user.php?action=disabledUser",
+    type: "POST",
+    dataType: "json",
+    data: { userId: id },
+    success: function (result) {
+      toastr.success(result)
+      loadUserList();
+    },
+    error: function (err) {
+      closeLoad();
+      console.log(err);
+    },
+  });
+}
+
+function enabledUser(id) {
+  openLoad();
+  $.ajax({
+    url: "../server/controllers/user.php?action=enableUser",
+    type: "POST",
+    dataType: "json",
+    data: { userId: id },
+    success: function (result) {
+      toastr.success(result)
+      loadUserList();
+    },
+    error: function (err) {
+      closeLoad();
       console.log(err);
     },
   });

@@ -14,7 +14,6 @@
   <!-- <script src="../content/vendors/@coreui/chartjs/js/coreui-chartjs.bundle.js"></script> -->
   <script src="../content/vendors/@coreui/utils/js/coreui-utils.js"></script>
   <script src="../content/js/main.js"></script>
-  <script src="../content/js/tooltips.js"></script>
   <!-- Data tables-->
   <script src="../content/js/jquery.min.js"></script>
   <script src="../content/js/jquery.dataTables.min.js"></script>
@@ -25,7 +24,8 @@
   <script src="../content/js/jszip.min.js"></script>
   <script src="../content/js/pdfmake.min.js"></script>
   <script src="../content/js/vfs_fonts.js"></script>
-
+  
+  <script src="../content/js/toastr.min.js"></script>
   <script src="../scripts/utils.js"></script>
 </body>
 

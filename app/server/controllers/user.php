@@ -30,6 +30,26 @@ switch ($_GET['action']) {
       echo json_encode($e);
     }
     break;
+  case 'enableUser':
+    try {
+      $userId = $_POST['userId'];
+      $result = enableUser($userId, $user);
+
+      echo json_encode($result);
+    } catch (Exception $e) {
+      echo json_encode($e);
+    }
+    break;
+  case 'disabledUser':
+    try {
+      $userId = $_POST['userId'];
+      $result = disableUser($userId, $user);
+
+      echo json_encode($result);
+    } catch (Exception $e) {
+      echo json_encode($e);
+    }
+    break;
 }
 
 function signin($userName, $password, $class) 
@@ -76,7 +96,6 @@ function signout()
 
 function getAllUsers($class)
 {
-  $icon = '<svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg>';
   $usersData = $class->getAllUsers();
   $data = array();
 
@@ -85,9 +104,9 @@ function getAllUsers($class)
     $data[] = array(
       "0" => ($reg->state) ? 
         '<button title="Edit" class="btn btn-warning ml-2" onclick="redirect(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg></button>'.
-        '<button title="Disabled" class="btn btn-danger ml-2" onclick="disabled(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-trash"></use></svg></button>' :
+        '<button title="Disabled" class="btn btn-danger ml-2" onclick="disabledUser(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-trash"></use></svg></button>' :
         '<button title="Edit" class="btn btn-warning ml-2" onclick="redirect(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use></svg></button>'.
-        '<button title="Enabled" class="btn btn-success ml-2" onclick="enabled(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-check"></use></svg></button>',
+        '<button title="Enabled" class="btn btn-success ml-2" onclick="enabledUser(' . $reg->id . ')"><svg class="c-icon"><use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-check"></use></svg></button>',
       "1" => $reg->name,
       "2" => $reg->document_type,
       "3" => $reg->document_number,
@@ -95,8 +114,8 @@ function getAllUsers($class)
       "5" => $reg->user_name,
       "6" => '<img src="../files/users/' . $reg->image . '" height="50px" width="50px"/>',
       "7" => ($reg->state) ? 
-        '<span class="label bg-green">Activated</<span>' : 
-        '<span class="label bg-red">Disabled</<span>'
+        '<span class="badge bg-success">Activated</<span>' : 
+        '<span class="badge bg-danger text-white">Disabled</<span>'
     );
   }
 
@@ -108,5 +127,15 @@ function getAllUsers($class)
   );
 
   return $result;
+}
+
+function enableUser($userId, $class) {
+  $result = $class->enableUserById($userId);
+  return $result ? "User enabled" : "An error ocurred when enabling user";
+}
+
+function disableUser($userId, $class) {
+  $result = $class->disableUserById($userId);
+  return $result ? "User disabled" : "An error ocurred when disabled user";
 }
 ?>

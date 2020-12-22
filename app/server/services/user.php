@@ -30,6 +30,14 @@ Class User
     $sql = "SELECT * FROM user";
     return execQuery($sql);
   }
-}
 
-?>
+  public function enableUserById($userId){
+    $sql = "UPDATE user SET state='1' WHERE id='$userId'";
+    return execQuery($sql);
+  }
+
+  public function disableUserById($userId){
+    $sql = "UPDATE user SET state='0' WHERE id='$userId'";
+    return execQuery($sql);
+  }
+}
