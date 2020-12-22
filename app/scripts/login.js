@@ -4,14 +4,13 @@ $("#btnLogin").on("click", function (e) {
   txtPassword = $("#txtPassword").val();
 
   $.post(
-    "../server/controllers/user.php?action=signin",
+    "../server/controllers/user.php?action=signIn",
     {
       username: txtUserName,
       password: txtPassword,
     },
     function (data) {
-      if (data != "null") {
-        console.log(data)
+      if (isJson(data)) {
         $(location).attr("href", "dashboard.php");
       } else {
         toastr.error("User name or password incorrect");

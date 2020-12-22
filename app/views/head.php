@@ -1,8 +1,8 @@
 <?php
 
-if (strlen(session_id()) < 1) {
+/*if (strlen(session_id()) < 1) {
   session_start();
-}
+}*/
 
 ?>
 
@@ -251,7 +251,7 @@ if (strlen(session_id()) < 1) {
               </svg> Projects<span class="badge badge-primary ml-auto">42</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="../server/controllers/user.php?action=signout">
+            <a class="dropdown-item" href="../server/controllers/user.php?action=signOut">
               <svg class="c-icon mr-2">
                 <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
               </svg> Logout

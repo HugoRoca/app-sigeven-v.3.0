@@ -1,10 +1,10 @@
 <?php
 
 define("DB_HOST", "localhost");
-define("DB_NAME", "patitas_consentidas");
+define("DB_NAME", "sigeven_v3");
 define("DB_USERNAME","root");
-define("DB_PASSWORD","1234");
+define("DB_PASSWORD","");
 define("DB_ENCODE","utf8");
-define("PRO_NAME","ITVentas");
+define("PRO_NAME","SIGEVEN_3");
 
 ?>

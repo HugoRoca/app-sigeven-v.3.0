@@ -15,7 +15,7 @@ if (!isset($_SESSION["name"])) {
           <div class="card">
             <div class="card-header">
               <strong>Users</strong> List | 
-              <button class="btn btn-sm btn-outline-primary" type="button"> New User</button>
+              <a class="btn btn-sm btn-outline-primary" type="button" href="new-user.php"> New User</a>
             </div>
             <div class="card-body">
               <table id="tblUserList" class="display responsive nowrap">

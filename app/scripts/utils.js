@@ -11,3 +11,12 @@ function initializeDataTable(id) {
     responsive: true,
   });
 }
+
+function isJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}

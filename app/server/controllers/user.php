@@ -7,19 +7,19 @@ require_once('../services/user.php');
 $user = new User();
 
 switch ($_GET['action']) {
-  case 'signin':
+  case 'signIn':
     try {
       $username = $_POST['username'];
       $password = $_POST['password'];
-      $fetch = signin($username, $password, $user);
+      $fetch = signIn($username, $password, $user);
 
       echo json_encode($fetch);
     } catch (Exception $e) {
-      echo json_encode($e);
+        throw new Exception($e);
     }
     break;
-  case 'signout':
-    signout();
+  case 'signOut':
+    signOut();
     break;
   case 'getAllUsers':
     try {
@@ -52,7 +52,7 @@ switch ($_GET['action']) {
     break;
 }
 
-function signin($userName, $password, $class) 
+function signIn($userName, $password, $class)
 {
   $passwordHash = $password;
   $result = $class->signIn($userName, $passwordHash);
@@ -87,7 +87,7 @@ function signin($userName, $password, $class)
   return $fetch;
 }
 
-function signout()
+function signOut()
 {
     session_start();
     session_destroy();
