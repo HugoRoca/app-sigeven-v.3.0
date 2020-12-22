@@ -43,9 +43,11 @@ if (strlen(session_id()) < 1) {
   <link rel="stylesheet" href="../content/css/buttons.dataTables.min.css">
   <link rel="stylesheet" href="../content/css/responsive.dataTables.min.css">
   <link rel="stylesheet" href="../content/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="../content/css/css-loader.css">
 </head>
 
 <body class="c-app">
+  <div id="loading" class="loader loader-default"></div>
   <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     <div class="c-sidebar-brand d-lg-down-none">
       <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">

@@ -4,26 +4,31 @@ var elements = {
 };
 
 function loadUserList() {
-  table = $(elements.tblUserList).dataTable({
-    aProcessing: true,
-    aServerSide: true,
-    dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdf"],
-    ajax: {
-      url: "../server/controllers/user.php?action=getAllUsers",
-      type: "get",
-      dataType: "json",
-      error: function e() {
-        console.log(e.responseText);
-      },
+  openLoad();
+  $.ajax({
+    url: "../server/controllers/user.php?action=getAllUsers",
+    type: "GET",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (result) {
+      closeLoad();
+      table = $(elements.tblUserList).dataTable({
+        dom: "Bfrtip",
+        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdf"],
+        data: result.aaData,
+        bDestroy: true,
+        iDisplayLength: 10,
+        order: [[0, "desc"]],
+      });
     },
-    bDestroy: true,
-    iDisplayLength: 5,
-    order: [[0, "desc"]],
+    error: function (err) {
+      console.log(err);
+    },
   });
 }
 
 function init() {
+  initializeDataTable(elements.tblUserList);
   loadUserList();
 }
 

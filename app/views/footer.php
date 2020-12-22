@@ -25,6 +25,8 @@
   <script src="../content/js/jszip.min.js"></script>
   <script src="../content/js/pdfmake.min.js"></script>
   <script src="../content/js/vfs_fonts.js"></script>
+
+  <script src="../scripts/utils.js"></script>
 </body>
 
 </html>
