@@ -5,6 +5,12 @@ const general = {
   closeLoad: function () {
     $("#loading").removeClass("is-active");
   },
+  addClassInvalidInput: function (id) {
+    $(id).addClass("is-invalid");
+  },
+  removeClassInvalidInput: function (id) {
+    $(id).removeClass("is-invalid");
+  },
   initializeDataTable: function (id) {
     $(id).DataTable({
       responsive: true,
