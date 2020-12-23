@@ -3,29 +3,31 @@ ob_start();
 session_start();
 
 if (!isset($_SESSION["name"])) {
-    header("Location: login.html");
+  header("Location: login.html");
 } else {
-    require 'head.php';
+  require 'head.php';
 
-    if ($_SESSION["access"]) {
-        ?>
+  if ($_SESSION["access"]) {
+?>
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong id="card-header-title"></strong>
-                        </div>
-                    </div>
-                </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <strong id="card-header-title"></strong>
             </div>
+            <div class="card-body">
+              
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <?php
-    } else {
-
-    }
+<?php
+  } else {
+  }
 }
 
 require 'footer.php';

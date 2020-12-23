@@ -10,7 +10,7 @@ $("#btnLogin").on("click", function (e) {
       password: txtPassword,
     },
     function (data) {
-      if (isJson(data)) {
+      if (general.isJson(data)) {
         $(location).attr("href", "dashboard.php");
       } else {
         toastr.error("User name or password incorrect");

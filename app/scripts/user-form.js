@@ -1,17 +1,15 @@
 const userFormModule = (function ($) {
-    'use strict';
+  "use strict";
 
-    let userForm = {};
+  let userForm = {};
 
-    userForm.init = {
+  userForm.init = {};
 
-    }
-
-    return userForm;
+  return userForm;
 })(jQuery);
 
 window.userFormModule = userFormModule;
 
 $(document).ready(function () {
-    userFormModule.init();
+  userFormModule.init();
 });
