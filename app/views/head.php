@@ -166,7 +166,7 @@ if (strlen(session_id()) < 1) {
           <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <svg class="c-sidebar-nav-icon">
               <use xlink:href="../content/vendors/@coreui/icons/svg/free.svg#cil-calculator"></use>
-            </svg> Inquiries</a>
+            </svg> Reports</a>
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
               <a class="c-sidebar-nav-link" href="inquiries_sales.php">

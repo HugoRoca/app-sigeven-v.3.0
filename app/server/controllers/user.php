@@ -15,7 +15,7 @@ switch ($_GET['action']) {
 
       echo json_encode($fetch);
     } catch (Exception $e) {
-        throw new Exception($e);
+      throw new Exception($e);
     }
     break;
   case 'signOut':
@@ -47,7 +47,17 @@ switch ($_GET['action']) {
 
       echo json_encode($result);
     } catch (Exception $e) {
-      echo json_encode($e);
+      throw new Exception($e);
+    }
+    break;
+  case 'getUserById':
+    try {
+      $userId = $_GET['userId'];
+      $result = getUserById($userId, $user);
+
+      echo json_encode($result);
+    } catch (Exception $e) {
+      throw new Exception($e);
     }
     break;
 }
@@ -137,5 +147,10 @@ function enableUser($userId, $class) {
 function disableUser($userId, $class) {
   $result = $class->disableUserById($userId);
   return $result ? "User disabled" : "An error ocurred when disabled user";
+}
+
+function getUserById($userId, $class) {
+  $result = $class->getUserById($userId);
+  return $result;
 }
 ?>

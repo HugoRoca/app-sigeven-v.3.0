@@ -3,9 +3,11 @@
 // Include connection
 require_once('../config/connection.php');
 
-Class User
+class User
 {
-  public function __construct() {}
+  public function __construct()
+  {
+  }
 
   public function signIn($userName, $password)
   {
@@ -31,13 +33,21 @@ Class User
     return execQuery($sql);
   }
 
-  public function enableUserById($userId){
+  public function enableUserById($userId)
+  {
     $sql = "UPDATE user SET state='1' WHERE id='$userId'";
     return execQuery($sql);
   }
 
-  public function disableUserById($userId){
+  public function disableUserById($userId)
+  {
     $sql = "UPDATE user SET state='0' WHERE id='$userId'";
     return execQuery($sql);
+  }
+
+  public function getUserById($userId)
+  {
+    $sql = "SELECT * FROM user WHERE id='$userId'";
+    return execQueryRowUnique($sql);
   }
 }

@@ -14,7 +14,6 @@ if (!isset($_SESSION["name"])) {
       <div class="row">
         <div class="col-md-12">
           <form class="form-horizontal" method="POST" id="frmUser">
-
             <div class="card">
               <div class="card-header">
                 <strong id="card-header-title"></strong>
@@ -36,13 +35,13 @@ if (!isset($_SESSION["name"])) {
                 </div>
                 <div class="form-group row">
                   <div class="form-group row col-md-6">
-                    <label class="col-md-4 col-form-label" for="text-input">Document Type:</label>
+                    <label class="col-md-4 col-form-label" for="text-input">Doc. Type:</label>
                     <div class="col-md-8">
                       <input class="form-control" id="document_type" type="text" placeholder="Document Type" autocomplete="off">
                     </div>
                   </div>
                   <div class="form-group row col-md-6">
-                    <label class="col-md-4 col-form-label" for="text-input">Document number:</label>
+                    <label class="col-md-4 col-form-label" for="text-input">Doc. number:</label>
                     <div class="col-md-8">
                       <input class="form-control" id="document_number" type="text" placeholder="Document number" autocomplete="off">
                     </div>
@@ -50,19 +49,11 @@ if (!isset($_SESSION["name"])) {
                 </div>
                 <div class="form-group row">
                   <div class="form-group row col-md-6">
-                    <label class="col-md-4 col-form-label" for="text-input">Phone:</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="phone" type="text" placeholder="Phone" autocomplete="off">
-                    </div>
-                  </div>
-                  <div class="form-group row col-md-6">
                     <label class="col-md-4 col-form-label" for="text-input">Email :</label>
                     <div class="col-md-8">
                       <input class="form-control" id="email" type="text" placeholder="Email" autocomplete="off">
                     </div>
                   </div>
-                </div>
-                <div class="form-group row">
                   <div class="form-group row col-md-6">
                     <label class="col-md-4 col-form-label" for="text-input">Charge:</label>
                     <div class="col-md-8">
@@ -96,7 +87,7 @@ if (!isset($_SESSION["name"])) {
                       <input id="image" type="file" name="file-input">
                     </div>
                     <input type="hidden" name="imageActually" id="imageActually">
-                    <img src="" width="150px" height="150px" id="imageShow">
+                    <img class="img-thumbnail img-fluid" width="150" height="150" src="" id="imageShow">
                   </div>
                 </div>
               </div>
