@@ -19,14 +19,6 @@ class User
     return execQuery($sql);
   }
 
-  public function getPermissionByUserId($userId)
-  {
-    $sql = "SELECT * 
-            FROM userpermission 
-            WHERE id_user = '$userId'";
-    return execQuery($sql);
-  }
-
   public function getAllUsers()
   {
     $sql = "SELECT * FROM user";
@@ -49,5 +41,11 @@ class User
   {
     $sql = "SELECT * FROM user WHERE id='$userId'";
     return execQueryRowUnique($sql);
+  }
+
+  public function getPermissionByUserId($userId)
+  {
+    $sql = "SELECT * FROM userPermission where id_user='$userId'";
+    return execQuery($sql);
   }
 }

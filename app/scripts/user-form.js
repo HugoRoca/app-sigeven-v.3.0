@@ -31,6 +31,15 @@ const userFormModule = (function ($) {
       });
     }
 
+    function getPermissionByUser(id) {
+      return $.ajax({
+        url: "../server/controllers/user.php?action=getPermissionByUser&userId=" + id,
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+      })
+    }
+
     return {
       getUserById: getUserById,
     };
@@ -76,6 +85,14 @@ const userFormModule = (function ($) {
           console.log(e);
           general.closeLoad();
         });
+    }
+
+    function loadPermissions() {
+      const userId = general.getQueryParamURLById("id");
+
+      if (!userId) return;
+
+      
     }
 
     return {

@@ -3,8 +3,10 @@
 session_start();
 
 require_once('../services/user.php');
+require_once('../services/permission.php');
 
 $user = new User();
+$permission = new Permission();
 
 switch ($_GET['action']) {
   case 'signIn':
@@ -59,6 +61,15 @@ switch ($_GET['action']) {
     } catch (Exception $e) {
       throw new Exception($e);
     }
+    break;
+  case 'getPermissionByUser':
+      try {
+        $userId = $_GET['userId'];
+        getPermissionByUser($userId, $user, $permission);
+        //code...
+      } catch (Exception $e) {
+        throw new Exception($e);
+      }
     break;
 }
 
@@ -152,5 +163,24 @@ function disableUser($userId, $class) {
 function getUserById($userId, $class) {
   $result = $class->getUserById($userId);
   return $result;
+}
+
+function getPermissionByUser($userId, $classUser, $classPermission)
+{
+  $permissions = $classPermission->getAllPermissions();
+  $permissionsByUser = $classUser->getPermissionByUserId($userId);
+
+  $values = array();
+
+  while ($per = $permissionsByUser->fetch_object())
+  {
+    array_push($values, $per->id_permission);
+  }
+
+  while ($reg = $permissions->fetch_object())
+  {
+    $switch = in_array($reg->id, $values) ? 'checked' : '';
+    echo '<li><input type="checkbox" ' . $switch . ' name="permission[]" value="' . $reg->id . '"> ' . $reg->name . '</li>';
+  }
 }
 ?>
