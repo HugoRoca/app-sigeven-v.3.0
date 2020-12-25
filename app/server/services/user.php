@@ -48,4 +48,83 @@ class User
     $sql = "SELECT * FROM userPermission where id_user='$userId'";
     return execQuery($sql);
   }
+
+  public function insertUser(
+    $name, 
+    $documentType, 
+    $documentNumber, 
+    $address, 
+    $charge, 
+    $email, 
+    $userName, 
+    $password, 
+    $image, 
+    $permissions)
+  {
+    $sql = "INSERT INTO User ('name', 'document_type', 'document_number', 'address', 'email', 'charge', 'user_name', 'password', 'image', 'state')
+      VALUES ('$name', '$documentType', '$documentNumber', '$address', '$email', '$charge', '$userName', '$password', '$image', '0')";
+    
+    $userIdNew = execQueryIdReturn($sql);
+
+    $numElements = 0;
+    $sw = true;
+
+    while ($numElements < count($permissions))
+    {
+      $sqlInsertPermission = "INSERT INTO userPermission (id_user, id_permission)
+        VALUES ('$userIdNew', '$permissions[$numElements]')";
+      
+      execQuery($sqlInsertPermission) or $sw = false;
+
+      $numElements = $numElements + 1;
+    }
+
+    return $sw;
+  }
+
+  public function updateUser(
+    $userId,
+    $name, 
+    $documentType, 
+    $documentNumber, 
+    $address, 
+    $charge, 
+    $email, 
+    $userName, 
+    $password, 
+    $image, 
+    $permissions)
+  {
+    $sql = "UPDATE User 
+      SET name = '$name', 
+        document_type = '$documentType', 
+        document_number = '$documentNumber', 
+        address = '$address', 
+        email = '$email', 
+        charge = '$charge', 
+        user_name = '$userName', 
+        password = '$password', 
+        image = '$image'
+      WHERE id = '$userId'";
+    
+    execQuery($sql);
+
+    $sqlDeletePermissions = "DELETE FROM userPermission WHERE id_user = '$userId'";
+    execQuery($sqlDeletePermissions);
+
+    $numElements = 0;
+    $sw = true;
+
+    while ($numElements < count($permissions))
+    {
+      $sqlInsertPermission = "INSERT INTO userPermission (id_user, id_permission)
+        VALUES ('$userId', '$permissions[$numElements]')";
+      
+      execQuery($sqlInsertPermission) or $sw = false;
+
+      $numElements = $numElements + 1;
+    }
+
+    return $sw;
+  }
 }

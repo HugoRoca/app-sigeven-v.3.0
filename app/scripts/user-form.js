@@ -17,6 +17,7 @@ const userFormModule = (function ($) {
     imageId: "#image",
     imageActuallyId: "#imageActually",
     imageShowId: "#imageShow",
+    permissionsId: '#Permissions'
   };
 
   let userForm = {};
@@ -42,6 +43,7 @@ const userFormModule = (function ($) {
 
     return {
       getUserById: getUserById,
+      getPermissionByUser: getPermissionByUser
     };
   })();
 
@@ -90,14 +92,25 @@ const userFormModule = (function ($) {
     function loadPermissions() {
       const userId = general.getQueryParamURLById("id");
 
-      if (!userId) return;
+      //if (!userId) return;
 
+      general.openLoad();
       
+      const success = (data) => {
+        $(elements.PermissionsListId).html(data);
+        general.closeLoad();
+      }
+
+      userForm.providers.getPermissionByUser(userId).then(success).catch(error => {
+        console.log(error)
+        general.closeLoad();
+      })
     }
 
     return {
       loadTitle: loadTitle,
       loadUserData: loadUserData,
+      loadPermissions: loadPermissions
     };
   })();
 
@@ -105,6 +118,7 @@ const userFormModule = (function ($) {
     function init() {
       userForm.events.loadTitle();
       userForm.events.loadUserData();
+      userForm.events.loadPermissions();
     }
 
     return {

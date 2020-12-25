@@ -51,7 +51,12 @@ if (strlen(session_id()) < 1) {
   <div id="loading" class="loader loader-default"></div>
   <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     <div class="c-sidebar-brand d-lg-down-none">
-      .::. SIGEVEN 3.0 .::. 
+      <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+        <use xlink:href="../content/assets/brand/coreui.svg#full"></use>
+      </svg>
+      <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
+        <use xlink:href="../content/assets/brand/coreui.svg#signet"></use>
+      </svg>
     </div>
     <ul class="c-sidebar-nav">
       <li class="c-sidebar-nav-title">Options</li>

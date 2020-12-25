@@ -87,7 +87,7 @@ if (!isset($_SESSION["name"])) {
                       <input id="image" type="file" name="file-input">
                     </div>
                     <input type="hidden" name="imageActually" id="imageActually">
-                    <img class="img-thumbnail img-fluid" width="150" height="150" src="" id="imageShow">
+                    <img class="img-thumbnail img-fluid" width="150" height="150" id="imageShow">
                   </div>
                 </div>
               </div>

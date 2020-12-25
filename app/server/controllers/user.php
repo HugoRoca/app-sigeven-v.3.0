@@ -65,8 +65,8 @@ switch ($_GET['action']) {
   case 'getPermissionByUser':
       try {
         $userId = $_GET['userId'];
-        getPermissionByUser($userId, $user, $permission);
-        //code...
+        $result = getPermissionByUser($userId, $user, $permission);
+        echo json_encode($result);
       } catch (Exception $e) {
         throw new Exception($e);
       }
@@ -177,10 +177,14 @@ function getPermissionByUser($userId, $classUser, $classPermission)
     array_push($values, $per->id_permission);
   }
 
+  $result = "";
+
   while ($reg = $permissions->fetch_object())
   {
     $switch = in_array($reg->id, $values) ? 'checked' : '';
-    echo '<li><input type="checkbox" ' . $switch . ' name="permission[]" value="' . $reg->id . '"> ' . $reg->name . '</li>';
+    $result = $result . '<li><input type="checkbox" ' . $switch . ' name="permission[]" value="' . $reg->id . '"> ' . $reg->name . '</li>';
   }
+
+  return $result;
 }
 ?>
